@@ -5,7 +5,7 @@ import me.doupay.sdk.net.Language;
 public class Constants {
     private static Constants constants;
     public static boolean openSysLog = false;
-    public static final String basrUrl = "http://192.168.10.115:9000/";
+    public static final String basrUrl = "http://192.168.10.126:9000/";
     public static Language language = Language.en_US;
 
     public static Constants getInstance() {

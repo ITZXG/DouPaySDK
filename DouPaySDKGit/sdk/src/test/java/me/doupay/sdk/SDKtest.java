@@ -19,6 +19,9 @@ public class SDKtest {
 
         long millis = System.currentTimeMillis();
         Payment.INSTANCE.test2(appId,"1610697341483","3");
+        PaymentInfo.test(appId,"3");
+
+
     }
 
 }

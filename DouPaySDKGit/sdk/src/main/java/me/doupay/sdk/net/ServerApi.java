@@ -17,4 +17,38 @@ public interface ServerApi {
     Observable<BaseVo<ContractCoinVo>> test(@Url String url, @FieldMap Map<String, Object> body);
 
 
+    @FormUrlEncoded
+    @POST()
+    /*
+    * 获取订单信息
+    * */
+    Observable<BaseVo<ContractCoinVo>> getOrderInfo(@Url String url, @FieldMap Map<String, Object> body);
+
+    @FormUrlEncoded
+    @POST()
+    /*
+    * 获取支付信息
+    * */
+    Observable<BaseVo<ContractCoinVo>> getPaymentInfo(@Url String url, @FieldMap Map<String, Object> body);
+
+    @FormUrlEncoded
+    @POST()
+    /*
+    * 获取支付方式
+    * */
+    Observable<BaseVo<ContractCoinVo>> getPaymentMethod(@Url String url, @FieldMap Map<String, Object> body);
+
+    @FormUrlEncoded
+    @POST()
+    /*
+    * 付款
+    * */
+    Observable<BaseVo<ContractCoinVo>> gotoPay(@Url String url, @FieldMap Map<String, Object> body);
+
+    @FormUrlEncoded
+    @POST()
+    /*
+    * 退款
+    * */
+    Observable<BaseVo<ContractCoinVo>> gotoRefund(@Url String url, @FieldMap Map<String, Object> body);
 }
