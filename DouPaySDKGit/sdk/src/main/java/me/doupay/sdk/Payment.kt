@@ -19,8 +19,7 @@ object Payment {
 
                 }
             })
-
-
+//        ServerApi.SERVICE_API.test(Constants.basrUrl + "111",map).subscribe()
     }
 
     fun test2(

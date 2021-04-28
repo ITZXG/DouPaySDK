@@ -13,4 +13,11 @@ public class PaymentMethodResponseData {
     public void setOrderCode(String orderCode) {
         this.orderCode = orderCode;
     }
+
+    @Override
+    public String toString() {
+        return "PaymentMethodResponseData{" +
+                "orderCode='" + orderCode + '\'' +
+                '}';
+    }
 }

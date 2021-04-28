@@ -1,10 +1,13 @@
 package me.doupay.sdk;
 
+import me.doupay.sdk.bean.OrderInfoResponseData;
+import me.doupay.sdk.bean.PaymentInfoResponseData;
+import me.doupay.sdk.bean.PaymentMethodResponseData;
+import me.doupay.sdk.interfaceCallback.CallBackListener;
 import org.junit.Test;
 
 
 public class SDKtest {
-
     @Test
     public void sign() {
         String timeStamp = "1610697341483";
@@ -15,13 +18,36 @@ public class SDKtest {
         Constants.openSysLog = true;
         Constants.getInstance().init(secret,privateKey);
 
-        Payment.INSTANCE.test(appId,"3");
+//        Payment.INSTANCE.test(appId,"3");
 
         long millis = System.currentTimeMillis();
-        Payment.INSTANCE.test2(appId,"1610697341483","3");
-        PaymentInfo.test(appId,"3");
+//        Payment.INSTANCE.test2(appId,"1610697341483","3");
+//        PaymentInfo.test(appId,"3");
 
+        PaymentInfo.getOrderInfo("1212", new CallBackListener<OrderInfoResponseData>() {
+            @Override
+            public void onFinish(OrderInfoResponseData data) {
+                System.out.println("-------------------------" + data.toString());
+            }
 
+            @Override
+            public void onError(int errorCode, String msg) {
+                System.out.println(errorCode + "-------------------------" + msg);
+            }
+        });
+        PaymentInfo.getPaymentMethod("111", "222", "1212", new CallBackListener<PaymentMethodResponseData>() {
+            @Override
+            public void onFinish(PaymentMethodResponseData data) {
+                System.out.println("-------------------------" + data.toString());
+
+            }
+
+            @Override
+            public void onError(int errorCode, String msg) {
+                System.out.println(errorCode + "-------------------------" + msg);
+
+            }
+        });
     }
 
 }

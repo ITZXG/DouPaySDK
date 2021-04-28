@@ -7,7 +7,7 @@ import me.doupay.sdk.net.exception.ApiException;
 /**
  *
  */
-public abstract class BaseVoObserver<D> implements Observer<BaseVo<D>> {
+public class BaseVoObserver<D> implements Observer<BaseVo<D>> {
 
     public BaseVoObserver() {
     }

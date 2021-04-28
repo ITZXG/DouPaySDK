@@ -19,4 +19,12 @@ public class OrderInfoResponseData {
     public void setCoinCode(String coinCode) {
         this.coinCode = coinCode;
     }
+
+    @Override
+    public String toString() {
+        return "OrderInfoResponseData{" +
+                "code='" + code + '\'' +
+                ", coinCode='" + coinCode + '\'' +
+                '}';
+    }
 }
