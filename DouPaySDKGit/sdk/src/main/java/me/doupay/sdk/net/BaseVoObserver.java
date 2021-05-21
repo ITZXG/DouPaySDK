@@ -45,6 +45,10 @@ public class BaseVoObserver<D> implements Observer<BaseVo<D>> {
 
     @Override
     public void onNext(BaseVo<D> deBaseVo) {
+        if (deBaseVo.getCode() != 200) {
+            onError(new ApiException.ServerException(deBaseVo.getCode(), deBaseVo.getMsg(), ""));
+            return;
+        }
         System.out.println(deBaseVo.getMsg());
         onPlaintextSuccess(deBaseVo.getData());
     }

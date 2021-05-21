@@ -15,7 +15,18 @@ public interface ServerApi {
     @FormUrlEncoded
     @POST()
     Observable<BaseVo<ContractCoinVo>> test(@Url String url, @FieldMap Map<String, Object> body);
-
+    /*
+     * 获取币种列表
+     * */
+    @FormUrlEncoded
+    @POST()
+    Observable<BaseVo<CoinResponseData>> getCoinList(@Url String url, @FieldMap Map<String, Object> body);
+    /*
+     * 获取法币列表
+     * */
+    @FormUrlEncoded
+    @POST()
+    Observable<BaseVo<CurrencyResponseData>> getCurrencyList(@Url String url, @FieldMap Map<String, Object> body);
 
     @FormUrlEncoded
     @POST()
@@ -34,13 +45,6 @@ public interface ServerApi {
     @FormUrlEncoded
     @POST()
     /*
-    * 获取支付方式
-    * */
-    Observable<BaseVo<PaymentMethodResponseData>> getPaymentMethod(@Url String url, @FieldMap Map<String, Object> body);
-
-    @FormUrlEncoded
-    @POST()
-    /*
     * 付款
     * */
     Observable<BaseVo<PayResponseData>> gotoPay(@Url String url, @FieldMap Map<String, Object> body);
@@ -51,4 +55,19 @@ public interface ServerApi {
     * 退款
     * */
     Observable<BaseVo<RefundResponseData>> gotoRefund(@Url String url, @FieldMap Map<String, Object> body);
+
+
+    @FormUrlEncoded
+    @POST()
+        /*
+         * 获取退款信息
+         * */
+    Observable<BaseVo<RefundInfoResponseData>> getRefundInfo(@Url String url, @FieldMap Map<String, Object> body);
+
+    @FormUrlEncoded
+    @POST()
+        /*
+         * 获取币种信息
+         * */
+    Observable<BaseVo<CoinCodeResponseData>> getCodeInfo(@Url String url, @FieldMap Map<String, Object> body);
 }
