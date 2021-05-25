@@ -1,49 +1,52 @@
 package me.doupay.sdk.bean;
 
+import java.util.List;
+
 public class CurrencyResponseData {
-    /**
-     * 简称
-     */
-    private String currency;
-    /**
-     * 是否默认 0否 1是
-     */
-    private int isDefault;
-    /**
-     * 名称
-     */
-    private String name;
 
-    public String getCurrency() {
-        return currency;
+    private List<RecordsBean> records;
+
+    public List<RecordsBean> getRecords() {
+        return records;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setRecords(List<RecordsBean> records) {
+        this.records = records;
     }
 
-    public int getIsDefault() {
-        return isDefault;
-    }
+    public static class RecordsBean {
+        /**
+         * isDefault : 0
+         * name : 美元
+         * currency : USA
+         */
 
-    public void setIsDefault(int isDefault) {
-        this.isDefault = isDefault;
-    }
+        private int isDefault;
+        private String name;
+        private String currency;
 
-    public String getName() {
-        return name;
-    }
+        public int getIsDefault() {
+            return isDefault;
+        }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+        public void setIsDefault(int isDefault) {
+            this.isDefault = isDefault;
+        }
 
-    @Override
-    public String toString() {
-        return "CurrencyResponseData{" +
-                "currency='" + currency + '\'' +
-                ", isDefault=" + isDefault +
-                ", name='" + name + '\'' +
-                '}';
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getCurrency() {
+            return currency;
+        }
+
+        public void setCurrency(String currency) {
+            this.currency = currency;
+        }
     }
 }

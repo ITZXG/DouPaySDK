@@ -11,10 +11,6 @@ import retrofit2.http.Url;
 
 public interface ServerApi {
     ServerApi SERVICE_API = new RetrofitHelper().getINSTANCE(false).create(ServerApi.class);
-
-    @FormUrlEncoded
-    @POST()
-    Observable<BaseVo<ContractCoinVo>> test(@Url String url, @FieldMap Map<String, Object> body);
     /*
      * 获取币种列表
      * */
@@ -64,10 +60,4 @@ public interface ServerApi {
          * */
     Observable<BaseVo<RefundInfoResponseData>> getRefundInfo(@Url String url, @FieldMap Map<String, Object> body);
 
-    @FormUrlEncoded
-    @POST()
-        /*
-         * 获取币种信息
-         * */
-    Observable<BaseVo<CoinCodeResponseData>> getCodeInfo(@Url String url, @FieldMap Map<String, Object> body);
 }

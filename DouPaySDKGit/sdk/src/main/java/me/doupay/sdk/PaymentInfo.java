@@ -9,32 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PaymentInfo {
-
-    public static void test(String appid,String key) {
-
-
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("appId",appid);
-        map.put("key",key);
-        ServerApi.SERVICE_API.test(Constants.basrUrl + "asc1/test6",map).subscribe(new BaseVoObserver<ContractCoinVo>(){
-            @Override
-            public void onPlaintextSuccess(ContractCoinVo data) {
-                System.out.println(data.toString());
-
-            }
-
-            @Override
-            public void onError(int errorCode, String msg) {
-                System.out.println(errorCode + msg);
-
-            }
-        });
-    }
-
     /**
      * 获取币种列表
-     * @param listener
+     * @param listener 回调
      */
     public static void  getCoinList (CallBackListener<CoinResponseData> listener) {
         if (Constants.getSecret().isEmpty() || Constants.getPrivateKey().isEmpty()) {
@@ -63,7 +40,7 @@ public class PaymentInfo {
 
     /**
      * 获取法币列表
-     * @param listener
+     * @param listener 回调
      */
     public static void getCurrencyList(CallBackListener<CurrencyResponseData> listener) {
         if (Constants.getSecret().isEmpty() || Constants.getPrivateKey().isEmpty()) {
@@ -91,10 +68,11 @@ public class PaymentInfo {
 
     }
 
-
-/*
-获取订单信息
- */
+    /**
+     * 获取订单信息
+     * @param orderCode 订单号【长度20到50】
+     * @param listener 回调
+     */
     public  static  void getOrderInfo(String orderCode, CallBackListener<OrderInfoResponseData> listener) {
         if (Constants.getSecret().isEmpty() || Constants.getPrivateKey().isEmpty()) {
             listener.onError(9999,"请先调用Constants.getInstance().init(secret,privateKey)");
@@ -126,8 +104,16 @@ public class PaymentInfo {
         });
     }
 /*
-获取支付信息
+
  */
+
+    /**
+     * 获取支付信息
+     * @param coinCode  币种代码【长度4】
+     * @param chainCoinCode 链币种代码【长度4】,非必传
+     * @param orderCode 币种代码【长度4】
+     * @param listener 回调
+     */
     public static  void getPaymentInfo (String coinCode,String chainCoinCode, String orderCode, CallBackListener<PaymentInfoResponseData> listener) {
         if (Constants.getSecret().isEmpty() || Constants.getPrivateKey().isEmpty()) {
             listener.onError(9999,"请先调用Constants.getInstance().init(secret,privateKey)");
@@ -162,8 +148,18 @@ public class PaymentInfo {
         });
     }
 
-    /*
-    付款
+    /**
+     * 付款,当orderType为0001时,amount内容为金额,currencyCode为必传,当orderType为0002时amount内容为数量,coinCode为必传
+     * @param amount        金额(0001)
+     * @param coinCode      币种(0002)【长度4】
+     * @param currencyCode  法币(0001:人民币cny,美元usa)【长度3到4】
+     * @param merchantUser  商家用户【长度10到20之间】
+     * @param orderNo       订单号【长度10到30】
+     * @param subject       商品标题【长度5~10】
+     * @param body          商品描述信息【长度10到100】
+     * @param description   附加说明【长度10到50】
+     * @param orderType     订单类型(0001金额 0002数量)【长度4】
+     * @param listener      回调
      */
     public  static void  pay (
             String amount, CoinCodeEnum coinCode,CurrencyCodeEnum currencyCode,
@@ -236,8 +232,14 @@ public class PaymentInfo {
             }
         });
     }
-    /*
-    退款
+
+    /**
+     * 退款
+     * @param address       退款地址【长度5到50】
+     * @param amount        退款数量【长度1到50
+     * @param orderCode     订单编号【长度5到50】
+     * @param description   退款描述【长度5到50】
+     * @param listener      回调
      */
     public  static void refund(String address,String amount,String orderCode,String description,CallBackListener<RefundResponseData> listener) {
         if (Constants.getSecret().isEmpty() || Constants.getPrivateKey().isEmpty()) {
@@ -274,6 +276,8 @@ public class PaymentInfo {
 
     /**
      * 获取退款信息
+     * @param orderCode     订单编号【长度20到50】
+     * @param listener      回调
      */
     public  static void getRefunds(String orderCode,CallBackListener<RefundInfoResponseData> listener) {
         if (Constants.getSecret().isEmpty() || Constants.getPrivateKey().isEmpty()) {
@@ -292,40 +296,6 @@ public class PaymentInfo {
         ServerApi.SERVICE_API.getRefundInfo(Constants.basrUrl + "trade/getRefunds",map).subscribe(new BaseVoObserver<RefundInfoResponseData>(){
             @Override
             public void onPlaintextSuccess(RefundInfoResponseData data) {
-                if (listener != null) {
-                    listener.onFinish(data);
-                }
-            }
-
-            @Override
-            public void onError(int errorCode, String msg) {
-                if (listener != null) {
-                    listener.onError(errorCode,msg);
-                }
-            }
-        });
-    }
-
-    /**
-     * 获取退款信息
-     */
-    public  static void getCoinInfo(String coinCode,CallBackListener<CoinCodeResponseData> listener) {
-        if (Constants.getSecret().isEmpty() || Constants.getPrivateKey().isEmpty()) {
-            listener.onError(9999,"请先调用Constants.getInstance().init(secret,privateKey)");
-            return;
-        }
-
-        if (coinCode == null || coinCode.isEmpty() ) {
-            listener.onError(9999,"缺少必要参数");
-            return;
-        }
-
-        Map<String,Object> map = new HashMap<>();
-        map.put("coinCode",coinCode);
-
-        ServerApi.SERVICE_API.getCodeInfo(Constants.basrUrl + "trade/getCoinInfo",map).subscribe(new BaseVoObserver<CoinCodeResponseData>(){
-            @Override
-            public void onPlaintextSuccess(CoinCodeResponseData data) {
                 if (listener != null) {
                     listener.onFinish(data);
                 }
