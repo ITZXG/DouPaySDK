@@ -1,7 +1,5 @@
 package me.doupay.sdk;
 
-import com.google.gson.JsonObject;
-import com.sun.deploy.net.HttpRequest;
 import me.doupay.sdk.bean.*;
 import me.doupay.sdk.interfaceCallback.CallBackListener;
 import me.doupay.sdk.net.BaseVoObserver;
