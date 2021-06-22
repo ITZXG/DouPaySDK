@@ -7,6 +7,41 @@ public class PaymentResultResponse {
      */
     private String orderCode;
 
+    /**
+     *币种名称
+     */
+    private String coinCode;
+    /**
+     *地址
+     */
+    private String address;
+    /**
+     *支付数量
+     */
+    private String amountPaid;
+    /**
+     *协议名称
+     */
+    private String protocolName;
+    /**
+     *支付状态 0未付款 1正常付款 2多付 3少付
+     */
+    private Integer paymentStatus;
+    /**
+     *结果 true成功 false失败
+     */
+    private boolean result;
+
+    public PaymentResultResponse(String orderCode, String coinCode, String address, String amountPaid, String protocolName, Integer paymentStatus, boolean result) {
+        this.orderCode = orderCode;
+        this.coinCode = coinCode;
+        this.address = address;
+        this.amountPaid = amountPaid;
+        this.protocolName = protocolName;
+        this.paymentStatus = paymentStatus;
+        this.result = result;
+    }
+
     public String getOrderCode() {
         return orderCode;
     }
@@ -31,32 +66,35 @@ public class PaymentResultResponse {
         this.address = address;
     }
 
-    public String getAmount() {
-        return amount;
+    public String getAmountPaid() {
+        return amountPaid;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setAmountPaid(String amountPaid) {
+        this.amountPaid = amountPaid;
     }
 
-    /**
-     *币种代码
-     */
-    private String coinCode;
-    /**
-     *地址
-     */
-    private String address;
-
-    public PaymentResultResponse(String orderCode, String coinCode, String address, String amount) {
-        this.orderCode = orderCode;
-        this.coinCode = coinCode;
-        this.address = address;
-        this.amount = amount;
+    public String getProtocolName() {
+        return protocolName;
     }
 
-    /**
-     *数量
-     */
-    private String amount;
+    public void setProtocolName(String protocolName) {
+        this.protocolName = protocolName;
+    }
+
+    public Integer getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(Integer paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public boolean isResult() {
+        return result;
+    }
+
+    public void setResult(boolean result) {
+        this.result = result;
+    }
 }
