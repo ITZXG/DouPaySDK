@@ -362,7 +362,14 @@ public class PaymentInfo {
      * @param listener 回调结果
      */
     public  static void verifySignAndGetResult (String headerSignString,String bodyString,CallBackListener<PaymentResultResponse> listener) {
-
+        if (Constants.getSecret().isEmpty() || Constants.getPublicKey().isEmpty()) {
+            listener.onError(9999,"请先调用Constants.getInstance().init()");
+            return;
+        }
+        if (headerSignString == null || headerSignString.isEmpty() || bodyString == null || bodyString.isEmpty()) {
+            listener.onError(9999,"请传入签名和body体");
+            return;
+        }
         // 拼接成a=b,c=d的形式
         String signString = generateClearTextSign(bodyString);
         // 验证签名
