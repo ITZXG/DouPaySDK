@@ -375,14 +375,14 @@ public class PaymentInfo {
 
         JSONObject jsonObject = new JSONObject(bodyString);
         String orderCode = jsonObject.getString("orderCode");
-        String coinCode = jsonObject.getString("coinCode");
+        String coinName = jsonObject.getString("coinName");
         String address = jsonObject.getString("address");
         String amount = jsonObject.getString("amountPaid");
         String protocolName = jsonObject.getString("protocolName");
         Integer paymentStatus = jsonObject.getInt("paymentStatus");
         boolean result = jsonObject.getBoolean("result");
 
-        PaymentResultResponse resultResponse = new PaymentResultResponse(orderCode,coinCode,address,amount,protocolName,paymentStatus,result);
+        PaymentResultResponse resultResponse = new PaymentResultResponse(orderCode,coinName,address,amount,protocolName,paymentStatus,result);
         listener.onFinish(resultResponse);
 
     }

@@ -10,7 +10,7 @@ public class PaymentResultResponse {
     /**
      *币种名称
      */
-    private String coinCode;
+    private String coinName;
     /**
      *地址
      */
@@ -32,9 +32,9 @@ public class PaymentResultResponse {
      */
     private boolean result;
 
-    public PaymentResultResponse(String orderCode, String coinCode, String address, String amountPaid, String protocolName, Integer paymentStatus, boolean result) {
+    public PaymentResultResponse(String orderCode, String coinName, String address, String amountPaid, String protocolName, Integer paymentStatus, boolean result) {
         this.orderCode = orderCode;
-        this.coinCode = coinCode;
+        this.coinName = coinName;
         this.address = address;
         this.amountPaid = amountPaid;
         this.protocolName = protocolName;
@@ -50,12 +50,12 @@ public class PaymentResultResponse {
         this.orderCode = orderCode;
     }
 
-    public String getCoinCode() {
-        return coinCode;
+    public String getCoinName() {
+        return coinName;
     }
 
-    public void setCoinCode(String coinCode) {
-        this.coinCode = coinCode;
+    public void setCoinName(String coinName) {
+        this.coinName = coinName;
     }
 
     public String getAddress() {
@@ -96,5 +96,18 @@ public class PaymentResultResponse {
 
     public void setResult(boolean result) {
         this.result = result;
+    }
+
+    @Override
+    public String toString() {
+        return "PaymentResultResponse{" +
+                "orderCode='" + orderCode + '\'' +
+                ", coinName='" + coinName + '\'' +
+                ", address='" + address + '\'' +
+                ", amountPaid='" + amountPaid + '\'' +
+                ", protocolName='" + protocolName + '\'' +
+                ", paymentStatus=" + paymentStatus +
+                ", result=" + result +
+                '}';
     }
 }
