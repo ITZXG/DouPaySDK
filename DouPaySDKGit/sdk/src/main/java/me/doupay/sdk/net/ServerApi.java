@@ -60,4 +60,11 @@ public interface ServerApi {
          * */
     Observable<BaseVo<RefundInfoResponseData>> getRefundInfo(@Url String url, @FieldMap Map<String, Object> body);
 
+    @FormUrlEncoded
+    @POST()
+        /*
+         * 获取退款信息
+         * */
+    Observable<BaseVo<RefundInfoResponseData>> test2(@Url String url, @FieldMap Map<String, Object> body);
+
 }

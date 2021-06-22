@@ -22,7 +22,7 @@ public class Constants {
      * @param appId appid
      * @param expireTime 过期时间,毫秒为单位,eg:30分钟有效期,就传"180000"
      */
-    public void init(String secret, String privateKey,String appId,String expireTime) {
+    public void init(String secret, String privateKey,String publickKey, String appId,String expireTime) {
         Constants.secret = secret;
         Constants.privateKey = privateKey;
         Constants.appId = appId;
@@ -33,6 +33,7 @@ public class Constants {
     private static String privateKey = "";
     private static String appId = "";
     private static String expireTime = "";
+    private static String publicKey = "";
 
     public static String getSecret() {
         return secret;
@@ -44,6 +45,9 @@ public class Constants {
 
     public static String getAppId() {
         return appId;
+    }
+    public static String getPublicKey() {
+        return publicKey;
     }
     public static String getExpireTime() {
         Long time = System.currentTimeMillis() + Long.valueOf(expireTime);

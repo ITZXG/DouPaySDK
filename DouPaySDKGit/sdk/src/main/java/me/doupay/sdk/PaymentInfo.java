@@ -1,12 +1,18 @@
 package me.doupay.sdk;
 
+import com.google.gson.JsonObject;
+import com.sun.deploy.net.HttpRequest;
 import me.doupay.sdk.bean.*;
 import me.doupay.sdk.interfaceCallback.CallBackListener;
 import me.doupay.sdk.net.BaseVoObserver;
 import me.doupay.sdk.net.ServerApi;
+import me.doupay.sdk.sign.RSAUtils;
+import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class PaymentInfo {
     /**
@@ -15,7 +21,7 @@ public class PaymentInfo {
      */
     public static void  getCoinList (CallBackListener<CoinResponseData> listener) {
         if (Constants.getSecret().isEmpty() || Constants.getPrivateKey().isEmpty()) {
-            listener.onError(9999,"请先调用Constants.getInstance().init(secret,privateKey)");
+            listener.onError(9999,"请先调用Constants.getInstance().init()");
             return;
         }
         Map<String,Object> map = new HashMap<>();
@@ -44,7 +50,7 @@ public class PaymentInfo {
      */
     public static void getCurrencyList(CallBackListener<CurrencyResponseData> listener) {
         if (Constants.getSecret().isEmpty() || Constants.getPrivateKey().isEmpty()) {
-            listener.onError(9999,"请先调用Constants.getInstance().init(secret,privateKey)");
+            listener.onError(9999,"请先调用Constants.getInstance().init()");
             return;
         }
         Map<String,Object> map = new HashMap<>();
@@ -75,7 +81,7 @@ public class PaymentInfo {
      */
     public  static  void getOrderInfo(String orderCode, CallBackListener<OrderInfoResponseData> listener) {
         if (Constants.getSecret().isEmpty() || Constants.getPrivateKey().isEmpty()) {
-            listener.onError(9999,"请先调用Constants.getInstance().init(secret,privateKey)");
+            listener.onError(9999,"请先调用Constants.getInstance().init()");
             return;
         }
 
@@ -84,6 +90,13 @@ public class PaymentInfo {
             listener.onError(9999,"缺少必要参数");
             return;
         }
+
+        if (orderCode.length() > 50 || orderCode.length() < 20) {
+            listener.onError(9999,"orderCode长度20到50");
+            return;
+        }
+
+
         Map<String,Object> map = new HashMap<>();
         map.put("orderCode",orderCode);
         ServerApi.SERVICE_API.getOrderInfo(Constants.basrUrl + "trade/getOrderInfo",map).subscribe(new BaseVoObserver<OrderInfoResponseData>(){
@@ -111,17 +124,26 @@ public class PaymentInfo {
      * 获取支付信息
      * @param coinCode  币种代码【长度4】
      * @param chainCoinCode 链币种代码【长度4】,非必传
-     * @param orderCode 币种代码【长度4】
+     * @param orderCode 订单号【长度10到30】
      * @param listener 回调
      */
     public static  void getPaymentInfo (String coinCode,String chainCoinCode, String orderCode, CallBackListener<PaymentInfoResponseData> listener) {
         if (Constants.getSecret().isEmpty() || Constants.getPrivateKey().isEmpty()) {
-            listener.onError(9999,"请先调用Constants.getInstance().init(secret,privateKey)");
+            listener.onError(9999,"请先调用Constants.getInstance().init()");
             return;
         }
 
         if (orderCode == null || coinCode == null || orderCode.isEmpty() || coinCode.isEmpty()) {
             listener.onError(9999,"缺少必要参数");
+            return;
+        }
+
+        if (coinCode.length() != 4) {
+            listener.onError(9999,"coinCode长度为4");
+            return;
+        }
+        if (orderCode.length() < 10 || orderCode.length() > 30) {
+            listener.onError(9999,"orderCode长度为10到30");
             return;
         }
 
@@ -168,7 +190,7 @@ public class PaymentInfo {
             OrderTypeCodeEnum orderType, CallBackListener<PayResponseData> listener
                               ) {
         if (!Constants.getInstance().isInitAllParameters()) {
-            listener.onError(9999,"请先调用Constants.getInstance().init方法");
+            listener.onError(9999,"请先调用Constants.getInstance().init()方法");
             return;
         }
         if ( amount == null  || orderNo == null || orderType == null
@@ -190,6 +212,7 @@ public class PaymentInfo {
                 listener.onError(9999,"currencyCode不能为空");
                 return;
             }
+
         }
 
         if (orderType.getKey().equals(OrderTypeCodeEnum.CountBuy.getKey())) {
@@ -197,6 +220,16 @@ public class PaymentInfo {
                 listener.onError(9999,"coinCode参数不能为空");
                 return;
             }
+        }
+
+        if (subject.length() < 5 || subject.length() > 10) {
+            listener.onError(9999,"subject长度为5-10");
+            return;
+        }
+
+        if (orderNo.length() < 10 || orderNo.length() > 30) {
+            listener.onError(9999,"orderNo长度为10-30");
+            return;
         }
 
         Map<String,Object> map = new HashMap<>();
@@ -243,13 +276,27 @@ public class PaymentInfo {
      */
     public  static void refund(String address,String amount,String orderCode,String description,CallBackListener<RefundResponseData> listener) {
         if (Constants.getSecret().isEmpty() || Constants.getPrivateKey().isEmpty()) {
-            listener.onError(9999,"请先调用Constants.getInstance().init(secret,privateKey)");
+            listener.onError(9999,"请先调用Constants.getInstance().init()");
             return;
         }
         if (address ==null || amount == null || description == null || orderCode == null || description.isEmpty() || orderCode.isEmpty() || amount.isEmpty() || address.isEmpty()) {
             listener.onError(9999,"缺少必要的参数");
             return;
         }
+
+        if (address.length() < 5 || address.length() > 50) {
+            listener.onError(9999,"退款地址【长度5到50】");
+            return;
+        }
+        if (orderCode.length() < 5 || orderCode.length() > 50) {
+            listener.onError(9999,"订单编号【长度5到50】");
+            return;
+        }
+        if (description.length() < 5 || description.length() > 50) {
+            listener.onError(9999,"退款描述【长度5到50】");
+            return;
+        }
+
 
         Map<String,Object> map = new HashMap<>();
         map.put("description",description);
@@ -281,7 +328,7 @@ public class PaymentInfo {
      */
     public  static void getRefunds(String orderCode,CallBackListener<RefundInfoResponseData> listener) {
         if (Constants.getSecret().isEmpty() || Constants.getPrivateKey().isEmpty()) {
-            listener.onError(9999,"请先调用Constants.getInstance().init(secret,privateKey)");
+            listener.onError(9999,"请先调用Constants.getInstance().init()");
             return;
         }
 
@@ -294,6 +341,94 @@ public class PaymentInfo {
         map.put("orderCode",orderCode);
 
         ServerApi.SERVICE_API.getRefundInfo(Constants.basrUrl + "trade/getRefunds",map).subscribe(new BaseVoObserver<RefundInfoResponseData>(){
+            @Override
+            public void onPlaintextSuccess(RefundInfoResponseData data) {
+                if (listener != null) {
+                    listener.onFinish(data);
+                }
+            }
+
+            @Override
+            public void onError(int errorCode, String msg) {
+                if (listener != null) {
+                    listener.onError(errorCode,msg);
+                }
+            }
+        });
+    }
+
+    /**
+     * 验证回调签名并组装回调对象
+     * @param headerSignString header中的签名(X-Merchant-sign)
+     * @param bodyString  body体内容
+     * @param listener 回调结果
+     */
+    public  static void verifySignAndGetResult (String headerSignString,String bodyString,CallBackListener<PaymentResultResponse> listener) {
+
+        // 拼接成a=b,c=d的形式
+        String signString = generateClearTextSign(bodyString);
+        // 验证签名
+        boolean isRight = RSAUtils.verifySign(Constants.getPublicKey(), signString, headerSignString);
+
+        if (!isRight) { // 验签失败
+            listener.onError(9999,"验签失败");
+            return;
+        }
+
+        JSONObject jsonObject = new JSONObject(bodyString);
+        String orderCode = jsonObject.getString("orderCode");
+        String coinCode = jsonObject.getString("coinCode");
+        String address = jsonObject.getString("address");
+        String amount = jsonObject.getString("amount");
+        PaymentResultResponse resultResponse = new PaymentResultResponse(orderCode,coinCode,address,amount);
+        listener.onFinish(resultResponse);
+
+    }
+
+    /**
+     * 根据json串生成明文签名
+     *
+     * @param jsonStr
+     * @return
+     */
+    public static String generateClearTextSign(String jsonStr) {
+        JSONObject jsonObject = new  JSONObject(jsonStr);
+        Map<String, Object> treeMap = new TreeMap<>();
+
+        for (String key : jsonObject.keySet()) {
+                treeMap.put(key, jsonObject.get(key));
+
+        }
+
+        StringBuffer sb = new StringBuffer();
+        for (String key : treeMap.keySet()) {
+            // 字母序降序排列拼接
+            if (!(treeMap.get(key) instanceof List)) {
+                sb.append(key + "=" + treeMap.get(key) + ",");
+            }else {
+                sb.append(key + "=" +  ((List<String>) treeMap.get(key)).get(0) + ",");
+            }
+
+        }
+//        log.debug("生成商家签名明文：{}", sb.toString().substring(0, sb.length() - 1));
+        return sb.toString().substring(0, sb.length() - 1);
+    }
+
+
+    public  static void test2(String orderCode,CallBackListener<RefundInfoResponseData> listener) {
+
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("type","9");
+        map.put("loginAccount","2");
+        map.put("serviceId","app");
+        map.put("operateBeginTime","1620835200000");
+        map.put("operateEndTime","1622525937000");
+        map.put("pageNum",1);
+        map.put("pageSize",10);
+
+
+        ServerApi.SERVICE_API.test2(Constants.basrUrl + "trade/log",map).subscribe(new BaseVoObserver<RefundInfoResponseData>(){
             @Override
             public void onPlaintextSuccess(RefundInfoResponseData data) {
                 if (listener != null) {
