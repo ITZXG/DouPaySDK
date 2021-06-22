@@ -22,11 +22,12 @@ public class Constants {
      * @param appId appid
      * @param expireTime 过期时间,毫秒为单位,eg:30分钟有效期,就传"180000"
      */
-    public void init(String secret, String privateKey,String publickKey, String appId,String expireTime) {
+    public void init(String secret, String privateKey,String publicKey, String appId,String expireTime) {
         Constants.secret = secret;
         Constants.privateKey = privateKey;
         Constants.appId = appId;
         Constants.expireTime = expireTime;
+        Constants.publicKey = publicKey;
     }
 
     private static String secret = "";

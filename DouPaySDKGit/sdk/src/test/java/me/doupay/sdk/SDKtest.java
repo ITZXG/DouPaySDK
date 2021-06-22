@@ -142,19 +142,21 @@ public class SDKtest {
     @Test
     public void test2 () {
         initAllParameters();
-        PaymentInfo.test2("121212", new CallBackListener<RefundInfoResponseData>() {
-            @Override
-            public void onFinish(RefundInfoResponseData data) {
-                System.out.println("++++++++++++++++" + data.toString());
-            }
+//        PaymentInfo.test2("121212", new CallBackListener<RefundInfoResponseData>() {
+//            @Override
+//            public void onFinish(RefundInfoResponseData data) {
+//                System.out.println("++++++++++++++++" + data.toString());
+//            }
+//
+//            @Override
+//            public void onError(int errorCode, String msg) {
+//                System.out.println(errorCode + "-------------------------" + msg);
+//            }
+//        });
 
-            @Override
-            public void onError(int errorCode, String msg) {
-                System.out.println(errorCode + "-------------------------" + msg);
-            }
-        });
-
-        PaymentInfo.verifySignAndGetResult("", "", new CallBackListener<PaymentResultResponse>() {
+        String bodystring = "{\"address\":\"TQ1EgPhuDXLvDfycCBQadbfbLkBPhEDoZX\",\"amountPaid\":15.26717557,\"coinName\":\"USDT\",\"orderCode\":\"ZF202106221133335640422688\",\"paymentStatus\":1,\"protocolName\":\"TRC20\",\"result\":true}";
+        String headstring = "uCJasnGz3H+2Xi86zeRkoDVEaXpM0LsCInOW1Kk28pn/3bXMn/2vUac7aQrWUzcf8YjTiXJt03IzS6k0y04TsvL1rdOj7TZgrk2aav8wM79ECviDW1+OQWd2XRhCRJGL4ca5lnXiE+1eHV5Tdq68Nu50tOkTKGI6cD3LT6imEWq5bTB0I+xuabnhSDfhWdmogmzEwKju3xSPcjxtzHGJ/c8Zc1NYH7ID92qWi77Wm6/UskHiATgULXYCbLHL/hBFDn4kGH8E+FQ0oSoPOTLOvpKnI27v6xD7CyHhMUOYRaVm5u/X4YNta65hF//JVPLnMw8I9NJA9WklDPFZ1DvIQQ==";
+        PaymentInfo.verifySignAndGetResult(headstring, bodystring, new CallBackListener<PaymentResultResponse>() {
             @Override
             public void onFinish(PaymentResultResponse data) {
 
