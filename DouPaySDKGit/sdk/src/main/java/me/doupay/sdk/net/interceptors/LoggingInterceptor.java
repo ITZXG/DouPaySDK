@@ -152,7 +152,7 @@ public class LoggingInterceptor implements Interceptor {
         }
         requestBuilder.addHeader("X-Merchant-sign", RSAUtils.sign(Constants.getPrivateKey(), sign));
         request = requestBuilder.build();
-
+    System.out.println( "|||||||||||||||||" + RSAUtils.sign(Constants.getPrivateKey(), sign) + "|||||||||||||||||");
         final RequestBody requestBody = request.body();
 
         String rSubtype = null;

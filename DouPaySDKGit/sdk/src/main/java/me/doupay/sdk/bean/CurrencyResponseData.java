@@ -49,4 +49,11 @@ public class CurrencyResponseData {
             this.currency = currency;
         }
     }
+
+    @Override
+    public String toString() {
+        return "CurrencyResponseData{" +
+                "records=" + records +
+                '}';
+    }
 }

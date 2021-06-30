@@ -390,4 +390,35 @@ public class OrderInfoResponseData {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return "OrderInfoResponseData{" +
+                "amount='" + amount + '\'' +
+                ", amountPaid='" + amountPaid + '\'' +
+                ", amountRefunded='" + amountRefunded + '\'' +
+                ", amountSettle='" + amountSettle + '\'' +
+                ", appId='" + appId + '\'' +
+                ", body='" + body + '\'' +
+                ", code='" + code + '\'' +
+                ", coinCode='" + coinCode + '\'' +
+                ", coinName='" + coinName + '\'' +
+                ", currency='" + currency + '\'' +
+                ", description='" + description + '\'' +
+                ", expireTime='" + expireTime + '\'' +
+                ", feeRate='" + feeRate + '\'' +
+                ", merchantName='" + merchantName + '\'' +
+                ", money='" + money + '\'' +
+                ", orderNo='" + orderNo + '\'' +
+                ", orderTime='" + orderTime + '\'' +
+                ", orderType='" + orderType + '\'' +
+                ", paid=" + paid +
+                ", paidTime='" + paidTime + '\'' +
+                ", refunded=" + refunded +
+                ", reversed=" + reversed +
+                ", settleTime='" + settleTime + '\'' +
+                ", subject='" + subject + '\'' +
+                ", paymentInfo=" + paymentInfo +
+                '}';
+    }
 }

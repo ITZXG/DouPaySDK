@@ -7,6 +7,7 @@ import me.doupay.sdk.net.ServerApi;
 import me.doupay.sdk.sign.RSAUtils;
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -232,13 +233,17 @@ public class PaymentInfo {
 
         Map<String,Object> map = new HashMap<>();
         map.put("appId",Constants.getAppId());
-        map.put("body",body);
-        map.put("description",description);
         map.put("expireTime",Constants.getExpireTime());
         map.put("merchantUser",merchantUser);
         map.put("orderNo",orderNo);
         map.put("orderType",orderType.getKey());
         map.put("subject",subject);
+        if (body != null && !body.equals("")) {
+            map.put("body",body);
+        }
+        if (description != null && !description.equals("")) {
+            map.put("description",description);
+        }
         if (orderType .getKey().equals(OrderTypeCodeEnum.MoneyBuy.getKey())) {
             map.put("money",amount);
             map.put("currency",currencyCode.getKey());
@@ -265,19 +270,52 @@ public class PaymentInfo {
     }
 
     /**
-     * 退款
-     * @param address       退款地址【长度5到50】
-     * @param amount        退款数量【长度1到50
-     * @param orderCode     订单编号【长度5到50】
-     * @param description   退款描述【长度5到50】
-     * @param listener      回调
+     * 取消订单
+     * @param orderCode 订单号
      */
-    public  static void refund(String address,String amount,String orderCode,String description,CallBackListener<RefundResponseData> listener) {
+    public static void cancleOrder (String orderCode,CallBackListener<PayResponseData> listener) {
         if (Constants.getSecret().isEmpty() || Constants.getPrivateKey().isEmpty()) {
             listener.onError(9999,"请先调用Constants.getInstance().init()");
             return;
         }
-        if (address ==null || amount == null || description == null || orderCode == null || description.isEmpty() || orderCode.isEmpty() || amount.isEmpty() || address.isEmpty()) {
+        if (orderCode == null || orderCode.equals("")) {
+            listener.onError(9999,"缺少必要的参数");
+            return;
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("orderCode",orderCode);
+
+        ServerApi.SERVICE_API.cancleOrder(Constants.basrUrl + "trade/cancel",map).subscribe(new BaseVoObserver<PayResponseData>(){
+            @Override
+            public void onPlaintextSuccess(PayResponseData data) {
+                if (listener != null) {
+                    listener.onFinish(data);
+                }
+            }
+
+            @Override
+            public void onError(int errorCode, String msg) {
+                if (listener != null) {
+                    listener.onError(errorCode,msg);
+                }
+            }
+        });
+    }
+
+    /**
+     * 退款
+     * @param address       退款地址【长度5到50】
+     * @param amount        退款数量【长度1到50
+     * @param orderCode     订单编号【长度5到50】
+     * @param remark   退款描述【长度5到50】
+     * @param listener      回调
+     */
+    public  static void refund(String address,String amount,String orderCode,String remark,CallBackListener<RefundResponseData> listener) {
+        if (Constants.getSecret().isEmpty() || Constants.getPrivateKey().isEmpty()) {
+            listener.onError(9999,"请先调用Constants.getInstance().init()");
+            return;
+        }
+        if (address ==null || amount == null || remark == null || orderCode == null || remark.isEmpty() || orderCode.isEmpty() || amount.isEmpty() || address.isEmpty()) {
             listener.onError(9999,"缺少必要的参数");
             return;
         }
@@ -290,14 +328,14 @@ public class PaymentInfo {
             listener.onError(9999,"订单编号【长度5到50】");
             return;
         }
-        if (description.length() < 5 || description.length() > 50) {
+        if (remark.length() < 5 || remark.length() > 50) {
             listener.onError(9999,"退款描述【长度5到50】");
             return;
         }
 
 
         Map<String,Object> map = new HashMap<>();
-        map.put("description",description);
+        map.put("remark",remark);
         map.put("amount",amount);
         map.put("appId",Constants.getAppId());
         map.put("orderCode",orderCode);
@@ -353,6 +391,49 @@ public class PaymentInfo {
                 }
             }
         });
+    }
+
+    /**
+     * 获取账单
+     * @param appId appId
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @param pageSize 数量
+     * @param pageNo 页数
+     * @param listener 回调
+     */
+    public  static void getBillRecords(String appId, LocalDateTime startTime,LocalDateTime endTime,Integer pageSize,Integer pageNo, CallBackListener<BillRecord> listener) {
+        if (appId == null) {
+            listener.onError(9999,"缺少必要参数");
+            return;
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("appId",appId);
+        map.put("pageSize",pageSize);
+        map.put("pageNo",pageNo);
+        if (startTime != null) {
+            map.put("startTime",startTime);
+        }
+        if (endTime != null) {
+            map.put("endTime",endTime);
+        }
+
+        ServerApi.SERVICE_API.getBillRecord(Constants.basrUrl + "trade/getBill",map).subscribe(new BaseVoObserver<BillRecord>(){
+            @Override
+            public void onPlaintextSuccess(BillRecord data) {
+                if (listener != null) {
+                    listener.onFinish(data);
+                }
+            }
+
+            @Override
+            public void onError(int errorCode, String msg) {
+                if (listener != null) {
+                    listener.onError(errorCode,msg);
+                }
+            }
+        });
+
     }
 
     /**
@@ -419,38 +500,7 @@ public class PaymentInfo {
             }
 
         }
-//        log.debug("生成商家签名明文：{}", sb.toString().substring(0, sb.length() - 1));
         return sb.toString().substring(0, sb.length() - 1);
     }
 
-
-    public  static void test2(String orderCode,CallBackListener<RefundInfoResponseData> listener) {
-
-
-        Map<String,Object> map = new HashMap<>();
-        map.put("type","9");
-        map.put("loginAccount","2");
-        map.put("serviceId","app");
-        map.put("operateBeginTime","1620835200000");
-        map.put("operateEndTime","1622525937000");
-        map.put("pageNum",1);
-        map.put("pageSize",10);
-
-
-        ServerApi.SERVICE_API.test2(Constants.basrUrl + "trade/log",map).subscribe(new BaseVoObserver<RefundInfoResponseData>(){
-            @Override
-            public void onPlaintextSuccess(RefundInfoResponseData data) {
-                if (listener != null) {
-                    listener.onFinish(data);
-                }
-            }
-
-            @Override
-            public void onError(int errorCode, String msg) {
-                if (listener != null) {
-                    listener.onError(errorCode,msg);
-                }
-            }
-        });
-    }
 }

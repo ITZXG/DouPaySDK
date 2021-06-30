@@ -15,4 +15,11 @@ public class RefundResponseData {
     public void setOrderCode(String orderCode) {
         this.orderCode = orderCode;
     }
+
+    @Override
+    public String toString() {
+        return "RefundResponseData{" +
+                "orderCode='" + orderCode + '\'' +
+                '}';
+    }
 }

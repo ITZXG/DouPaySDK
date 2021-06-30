@@ -24,7 +24,7 @@ public class PaymentResultResponse {
      */
     private String protocolName;
     /**
-     *支付状态 0未付款 1正常付款 2多付 3少付
+     *支付状态 0未付款 1正常付款 2少付 3多付
      */
     private Integer paymentStatus;
     /**

@@ -179,5 +179,14 @@ public class PaymentInfoResponseData {
                 this.remark = remark;
             }
         }
+
+        @Override
+        public String toString() {
+            return "PaymentMethodsBean{" +
+                    "paymentMethodCode='" + paymentMethodCode + '\'' +
+                    ", paymentMethodName='" + paymentMethodName + '\'' +
+                    ", channelList=" + channelList +
+                    '}';
+        }
     }
 }

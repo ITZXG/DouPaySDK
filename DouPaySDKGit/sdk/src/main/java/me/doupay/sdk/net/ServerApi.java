@@ -59,12 +59,16 @@ public interface ServerApi {
          * 获取退款信息
          * */
     Observable<BaseVo<RefundInfoResponseData>> getRefundInfo(@Url String url, @FieldMap Map<String, Object> body);
-
     @FormUrlEncoded
     @POST()
         /*
-         * 获取退款信息
+         * 获取账单
          * */
-    Observable<BaseVo<RefundInfoResponseData>> test2(@Url String url, @FieldMap Map<String, Object> body);
-
+    Observable<BaseVo<BillRecord>> getBillRecord(@Url String url, @FieldMap Map<String, Object> body);
+    @FormUrlEncoded
+    @POST()
+        /*
+         * 取消订单
+         * */
+    Observable<BaseVo<PayResponseData>> cancleOrder(@Url String url, @FieldMap Map<String, Object> body);
 }

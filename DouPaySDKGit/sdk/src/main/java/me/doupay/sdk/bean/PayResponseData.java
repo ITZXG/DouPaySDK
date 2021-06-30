@@ -13,4 +13,11 @@ public class PayResponseData {
     public void setOrderCode(String orderCode) {
         this.orderCode = orderCode;
     }
+
+    @Override
+    public String toString() {
+        return "PayResponseData{" +
+                "orderCode='" + orderCode + '\'' +
+                '}';
+    }
 }

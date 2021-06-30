@@ -4,7 +4,6 @@ import java.util.List;
 
 public class RefundInfoResponseData {
 
-
     private List<RecordsBean> records;
 
     public List<RecordsBean> getRecords() {
@@ -17,20 +16,28 @@ public class RefundInfoResponseData {
 
     public static class RecordsBean {
         /**
-         * address : 123123
-         * description : 退100元的
+         * amount : 0.02000000
+         * address : TEQrvHyU54YibVHMGb7475n8y3mXBofaaR
          * refundStatus : 0
-         * orderCode : ZF202105211638306838484070
-         * refundCode : 202105211752108481672240
-         * refundAmount : 10.00000000
+         * orderCode : ZF202106281454045820662888
+         * remark : 退100元的
+         * refundCode : TK202106281637051484618880
          */
 
+        private String amount;
         private String address;
-        private String description;
         private int refundStatus;
         private String orderCode;
+        private String remark;
         private String refundCode;
-        private String refundAmount;
+
+        public String getAmount() {
+            return amount;
+        }
+
+        public void setAmount(String amount) {
+            this.amount = amount;
+        }
 
         public String getAddress() {
             return address;
@@ -38,14 +45,6 @@ public class RefundInfoResponseData {
 
         public void setAddress(String address) {
             this.address = address;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
         }
 
         public int getRefundStatus() {
@@ -64,6 +63,14 @@ public class RefundInfoResponseData {
             this.orderCode = orderCode;
         }
 
+        public String getRemark() {
+            return remark;
+        }
+
+        public void setRemark(String remark) {
+            this.remark = remark;
+        }
+
         public String getRefundCode() {
             return refundCode;
         }
@@ -71,13 +78,12 @@ public class RefundInfoResponseData {
         public void setRefundCode(String refundCode) {
             this.refundCode = refundCode;
         }
+    }
 
-        public String getRefundAmount() {
-            return refundAmount;
-        }
-
-        public void setRefundAmount(String refundAmount) {
-            this.refundAmount = refundAmount;
-        }
+    @Override
+    public String toString() {
+        return "RefundInfoResponseData{" +
+                "records=" + records +
+                '}';
     }
 }

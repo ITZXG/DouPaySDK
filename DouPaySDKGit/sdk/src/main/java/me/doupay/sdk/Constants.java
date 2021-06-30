@@ -5,7 +5,7 @@ import me.doupay.sdk.net.Language;
 public class Constants {
     private static Constants constants;
     public static boolean openSysLog = false;
-    public static final String basrUrl = "http://192.168.10.129:9000/";
+    public static final String basrUrl = "http://192.168.10.126:9000/";
     public static Language language = Language.en_US;
 
     public static Constants getInstance() {
@@ -20,7 +20,7 @@ public class Constants {
      * @param secret secket
      * @param privateKey privateKey
      * @param appId appid
-     * @param expireTime 过期时间,毫秒为单位,eg:30分钟有效期,就传"180000"
+     * @param expireTime 过期时间,以分钟为单位,eg:30分钟有效期,就传"30"
      */
     public void init(String secret, String privateKey,String publicKey, String appId,String expireTime) {
         Constants.secret = secret;
@@ -51,8 +51,7 @@ public class Constants {
         return publicKey;
     }
     public static String getExpireTime() {
-        Long time = System.currentTimeMillis() + Long.valueOf(expireTime);
-        return time.toString();
+        return expireTime;
     }
 
     public boolean isInitAllParameters() {
