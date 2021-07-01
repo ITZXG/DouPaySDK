@@ -59,7 +59,7 @@ public class SDKtest {
     public void getPay() {
                  initAllParameters();
                 String orderNo = String.valueOf(System.currentTimeMillis());
-                PaymentInfo.pay("0.02", CoinCodeEnum.ETH, CurrencyCodeEnum.CNY, "17701278922", orderNo,
+                PaymentInfo.pay("2", CoinCodeEnum.TRX, CurrencyCodeEnum.CNY, "17701278922", orderNo,
                 "我很好啊啊", "", "", OrderTypeCodeEnum.CountBuy, new CallBackListener<PayResponseData>() {
                     @Override
                     public void onFinish(PayResponseData data) {
@@ -92,7 +92,7 @@ public class SDKtest {
     @Test
     public void getOrderInfo() {
         initAllParameters();
-        PaymentInfo.getOrderInfo("ZF202106291928274969668155", new CallBackListener<OrderInfoResponseData>() {
+        PaymentInfo.getOrderInfo("ZF202106301924552349008477", new CallBackListener<OrderInfoResponseData>() {
             @Override
             public void onFinish(OrderInfoResponseData data) {
                 System.out.println("++++++++++++++++" + data.toString());
