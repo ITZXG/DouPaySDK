@@ -320,7 +320,7 @@ public class OrderInfoResponseData {
             private String amount;
             private String chainCoinCode;
             private String chainCoinName;
-            private String exchangeRate;
+            private String price;
             private int isDefault;
             private int paymentStatus;
             private String protocolName;
@@ -357,12 +357,12 @@ public class OrderInfoResponseData {
                 this.chainCoinName = chainCoinName;
             }
 
-            public String getExchangeRate() {
-                return exchangeRate;
+            public String getPrice() {
+                return price;
             }
 
-            public void setExchangeRate(String exchangeRate) {
-                this.exchangeRate = exchangeRate;
+            public void setPrice(String price) {
+                this.price = price;
             }
 
             public int getIsDefault() {

@@ -59,7 +59,7 @@ public class SDKtest {
     public void getPay() {
                  initAllParameters();
                 String orderNo = String.valueOf(System.currentTimeMillis());
-                PaymentInfo.pay("2", CoinCodeEnum.TRX, CurrencyCodeEnum.CNY, "17701278922", orderNo,
+                PaymentInfo.pay("2", CoinCodeEnum.USDT, CurrencyCodeEnum.CNY, "17701278922", orderNo,
                 "我很好啊啊", "", "", OrderTypeCodeEnum.CountBuy, new CallBackListener<PayResponseData>() {
                     @Override
                     public void onFinish(PayResponseData data) {
@@ -76,7 +76,7 @@ public class SDKtest {
     @Test
     public void cancle() {
         initAllParameters();
-        PaymentInfo.cancleOrder("ZF202106261501447414852703", new CallBackListener<PayResponseData>() {
+        PaymentInfo.cancleOrder("ZF202107031430314990720038", new CallBackListener<PayResponseData>() {
             @Override
             public void onFinish(PayResponseData data) {
                 System.out.println("++++++++++++++++" + data.toString());
@@ -92,7 +92,7 @@ public class SDKtest {
     @Test
     public void getOrderInfo() {
         initAllParameters();
-        PaymentInfo.getOrderInfo("ZF202106301924552349008477", new CallBackListener<OrderInfoResponseData>() {
+        PaymentInfo.getOrderInfo("ZF202107031429308835343624", new CallBackListener<OrderInfoResponseData>() {
             @Override
             public void onFinish(OrderInfoResponseData data) {
                 System.out.println("++++++++++++++++" + data.toString());
@@ -109,7 +109,7 @@ public class SDKtest {
     public void getPaymentInfo() {
         initAllParameters();
 
-        PaymentInfo.getPaymentInfo("0003","" ,"ZF202106261501447414852703", new CallBackListener<PaymentInfoResponseData>() {
+        PaymentInfo.getPaymentInfo("0001","" ,"ZF202107031353384554486189", new CallBackListener<PaymentInfoResponseData>() {
             @Override
             public void onFinish(PaymentInfoResponseData data) {
                 System.out.println("++++++++++++++++" + data.toString());
@@ -127,7 +127,7 @@ public class SDKtest {
     @Test
     public void getRefund() {
         initAllParameters();
-        PaymentInfo.refund("0x5e725D789ab3552c6D0f60ee0057b5626629D4C5", "0.01", "ZF202106291928274969668155", "退100元的", new CallBackListener<RefundResponseData>() {
+        PaymentInfo.refund("TEQrvHyU54YibVHMGb7475n8y3mXBofaaR", "5", "ZF202107031353384554486189", "退0.5个,啦啦啦", new CallBackListener<RefundResponseData>() {
             @Override
             public void onFinish(RefundResponseData data) {
                 System.out.println("++++++++++++++++" + data.toString());
@@ -143,7 +143,7 @@ public class SDKtest {
     @Test
     public void getRefundInfo() {
         initAllParameters();
-        PaymentInfo.getRefunds("ZF202106291928274969668155", new CallBackListener<RefundInfoResponseData>() {
+        PaymentInfo.getRefunds("ZF202107021555237920508776", new CallBackListener<RefundInfoResponseData>() {
             @Override
             public void onFinish(RefundInfoResponseData data) {
                 System.out.println("++++++++++++++++" + data.toString());
